@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-exp7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-exp7
+  template:
+    metadata:
+      labels:
+        app: devops-exp7
+    spec:
+      containers:
+        - name: devops-exp7
+          image: devops-exp7:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: app-storage
+              mountPath: /usr/share/nginx/html/data
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: devops-exp7-pvc
